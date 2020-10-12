@@ -1,0 +1,22 @@
+{
+	"projectName": "sw-orderhistory",
+	"licenseText": "proprietary",
+	"pkgs": [{
+		"name": "sw-orderhistory CSS",
+		"file": "sw-orderhistory.css",
+		"isDebug": true,
+		"fileIncludes": [{
+			"text": "custom.css",
+			"path": "themes/"
+		}]
+	}, {
+		"name": "sw-orderhistory JS",
+		"file": "sw-orderhistory.js",
+		"isDebug": true,
+		"fileIncludes": [{
+			"text": "custom.js",
+			"path": "themes/"
+		}]
+	}],
+	"resources" : []
+}
