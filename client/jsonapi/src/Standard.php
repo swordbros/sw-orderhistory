@@ -95,7 +95,6 @@ class Standard
 	 */
 	public function post( ServerRequestInterface $request, ResponseInterface $response ) : \Psr\Http\Message\ResponseInterface
 	{
-
 		$view = $this->getView();
 		try
 		{

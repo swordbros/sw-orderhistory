@@ -35,9 +35,7 @@ class Standard
 	 * @param string $uid Unique identifier for the output if the content is placed more than once on the same page
 	 * @return string HTML code
 	 */
-	public function get_cancelorder_button($orderItem){
-		return '<button type="button" class="btn btn-default btn-cancel-order btn-cancel-order-'.$orderItem->getBaseId().' sw_confirm" data-message="'. $this->translate( 'client', 'Confitm Message' ).'" data-text="'.$this->translate( 'client', 'Button' ).'" href="https://paltoru2.tulparstudyo.net/jsonapi/orderhistory?base_id='.$orderItem->getBaseId().'&order_id='.$orderItem->getId().'" data-action="cancel-order">';
-	}
+
 	public function getBody( string $uid = '' ) : string
 	{
 		$prefixes = array( 'f', 'l' );
