@@ -150,7 +150,8 @@ class Helper
 			define('sw_order_history_js', TRUE);
 		return '<script>
 			// order history
-				$("body").on("click", ".action-cancel-order", function(e){
+			$("body").off("click", ".action-cancel-order");
+					$("body").on("click", ".action-cancel-order", function(e){
 					e.preventDefault();
 					var url = "'.url("jsonapi").'";
 					var cancel_order= [];
