@@ -6,7 +6,7 @@
 Add this line your web site composser.json 
     "require": {
         ...
-        "swordbros/sw-slider": "^1.0"
+        "swordbros/sw-orderhistory": "^1.0"
     },
 ```
 ### Or 
