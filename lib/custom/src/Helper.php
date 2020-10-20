@@ -23,7 +23,7 @@ class Helper
 		$statuspayment = $orderItem->get('order.statuspayment');
 		$cancelables = array('-1', '4', '5');
 		if(in_array($statuspayment, $cancelables)){
-			return '<button type="button" class="btn btn-default btn-cancel-order btn-cancel-order-'.$orderItem->getBaseId().' sw_confirm" data-message="'. $contex->translate( 'client', 'Confitm Message' ).'" data-text="'.$contex->translate( 'client', 'Button' ).'" href="'.url('jsonapi/orderhistory').'?base_id='.$orderItem->getBaseId().'&order_id='.$orderItem->getId().'" data-action="cancel-order">Cancel</button>'.self::load_js();
+			return '<button type="button" class="btn btn-default btn-cancel-order btn-cancel-order-'.$orderItem->getBaseId().' sw_confirm" data-message="'. $contex->translate( 'client', 'Your order will be canceled. Do you approve this action?' ).'" data-text="'.$contex->translate( 'client', 'I accept' ).'" href="'.url('jsonapi/orderhistory').'?base_id='.$orderItem->getBaseId().'&order_id='.$orderItem->getId().'" data-action="cancel-order">Cancel</button>'.self::load_js();
 		}
 		
 	}
@@ -113,10 +113,13 @@ class Helper
 				<?= $enc->html( $contex->translate( 'client', 'Show' ) ) ?>
 			</a>
 		</div>
-		<div class="col-12 process-table"  style="display: none;">
+	
+			<div class="col-12 desktop process-table"  style="display: none;"> 
 		<table class="table mt-2">
-		<tr><th colspan="5"><?= $enc->html( $contex->translate( 'client', 'Order Timeline' ), $enc::TRUST ) ?></th></tr>
-		<tr>
+			<tbody>
+		
+			<tr><th colspan="5">Order Timeline</th></tr>
+		
 		<th><?= $enc->html( $contex->translate( 'client', 'Process Number' ), $enc::TRUST ) ?></th>
 		<th><?= $enc->html( $contex->translate( 'client', 'Created Date' ), $enc::TRUST ) ?></th>
 		<th><?= $enc->html( $contex->translate( 'client', 'Payment Status' ), $enc::TRUST ) ?></th>
@@ -136,8 +139,68 @@ class Helper
 							<?php endif; ?></td>
 		</tr>
 		<?php }?>
+			</tbody>
 		</table>
 		</div>
+		
+
+<!--mobile process table-->
+<div class="mobile" style="width: 100%">
+		<div class="col-12  process-table"  style="display: none;">
+		<table class=" table mt-2">
+			<tr><th >Order Timeline</th></tr>
+				<?php /*?><div class="" style="font-weight:  bold; text-align: center" ><a><?= $enc->html( $contex->translate( 'client', 'Order Timeline' ), $enc::TRUST ) ?></a></div><?php */?>
+		<tr>
+			<?php foreach($order as $listItem){?>
+		<th><div class="process-title"><?= $enc->html( $contex->translate( 'client', 'Process Number' ), $enc::TRUST ) ?> </div>
+			<div class="process-desc"><?=$listItem->getBaseId()?>.<?=$listItem->getId()?> </div>
+			
+		</th>
+		</tr>
+			
+		<tr>
+			<th>
+				<div class="process-title"><?= $enc->html( $contex->translate( 'client', 'Created Date' ), $enc::TRUST ) ?></div>
+						<div class="process-desc"><?= $enc->html( date_create( $listItem->getTimeCreated() )->format( $dateformat ) ); ?></div>
+			</th>
+			
+		
+		</tr>
+		<tr>
+			<th>
+				<div class="process-title"><?= $enc->html( $contex->translate( 'client', 'Payment Status' ), $enc::TRUST ) ?></div>
+					<div class="process-desc"><?php if( ( $date = $listItem->getDatePayment() ) !== null ) : ?>
+								<?php $code = 'pay:' . $listItem->getPaymentStatus(); $paystatus = $contex->translate( 'mshop/code', $code ); ?>
+								<?= $enc->html( sprintf( $attrformat, $paystatus, date_create( $date )->format( $dateformat ) ), $enc::TRUST ); ?>
+							<?php endif; ?>
+						</div>
+			</th>
+			
+		
+		</tr>
+		<tr>
+			<th style="
+    border-bottom: 2px solid;
+">
+					<div class="process-title"><?= $enc->html( $contex->translate( 'client', 'Delivery Status' ), $enc::TRUST ) ?></div>
+				<div class="process-desc"><?php if( ( $date = $listItem->getDateDelivery() ) !== null ) : ?>
+								<?php $code = 'stat:' . $listItem->getDeliveryStatus(); $status = $this->translate( 'mshop/code', $code ); ?>
+								<?= $enc->html( sprintf( $attrformat, $status, date_create( $date )->format( $dateformat ) ), $enc::TRUST ); ?>
+							<?php endif; ?></div>
+			</th>
+			
+		
+		</tr>
+		
+		<?php }?>
+		
+	
+	
+		</table>
+		</div></div>
+
+
+
 	</div>
 
 <?php
