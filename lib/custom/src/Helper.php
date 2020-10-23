@@ -134,7 +134,7 @@ class Helper
 								<?= $enc->html( sprintf( $attrformat, $paystatus, date_create( $date )->format( $dateformat ) ), $enc::TRUST ); ?>
 							<?php endif; ?></td>
 		<td><?php if( ( $date = $listItem->getDateDelivery() ) !== null ) : ?>
-								<?php $code = 'stat:' . $listItem->getDeliveryStatus(); $status = $this->translate( 'mshop/code', $code ); ?>
+								<?php $code = 'stat:' . $listItem->getDeliveryStatus(); $status = $contex->translate( 'mshop/code', $code ); ?>
 								<?= $enc->html( sprintf( $attrformat, $status, date_create( $date )->format( $dateformat ) ), $enc::TRUST ); ?>
 							<?php endif; ?></td>
 		</tr>
@@ -184,7 +184,7 @@ class Helper
 ">
 					<div class="process-title"><?= $enc->html( $contex->translate( 'client', 'Delivery Status' ), $enc::TRUST ) ?></div>
 				<div class="process-desc"><?php if( ( $date = $listItem->getDateDelivery() ) !== null ) : ?>
-								<?php $code = 'stat:' . $listItem->getDeliveryStatus(); $status = $this->translate( 'mshop/code', $code ); ?>
+								<?php $code = 'stat:' . $listItem->getDeliveryStatus(); $status = $contex->translate( 'mshop/code', $code ); ?>
 								<?= $enc->html( sprintf( $attrformat, $status, date_create( $date )->format( $dateformat ) ), $enc::TRUST ); ?>
 							<?php endif; ?></div>
 			</th>
