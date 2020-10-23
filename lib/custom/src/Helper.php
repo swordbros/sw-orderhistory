@@ -99,7 +99,7 @@ class Helper
 						</span>
 						<span class="value col-7">
 							<?php if( ( $date = $orderItem->getDateDelivery() ) !== null ) : ?>
-								<?php $code = 'stat:' . $orderItem->getDeliveryStatus(); $status = $this->translate( 'mshop/code', $code ); ?>
+								<?php $code = 'stat:' . $orderItem->getDeliveryStatus(); $status = $contex->translate( 'mshop/code', $code ); ?>
 								<?= $enc->html( sprintf( $attrformat, $status, date_create( $date )->format( $dateformat ) ), $enc::TRUST ); ?>
 							<?php endif; ?>
 						</span>
