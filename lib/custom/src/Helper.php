@@ -20,10 +20,13 @@ namespace Aimeos\MShop\Swordbros\Orderhistory;
 class Helper
 {
 	static function get_cancelorder_button($orderItem, $contex){
+		$statusdelivery = $orderItem->get('order.statusdelivery');
 		$statuspayment = $orderItem->get('order.statuspayment');
-		$cancelables = array('-1', '4', '5');
-		if(in_array($statuspayment, $cancelables)){
-			return '<button type="button" class="btn btn-default btn-cancel-order btn-cancel-order-'.$orderItem->getBaseId().' sw_confirm" data-message="'. $contex->translate( 'client', 'Your order will be canceled. Do you approve this action?' ).'" data-text="'.$contex->translate( 'client', 'I accept' ).'" href="'.url('jsonapi/orderhistory').'?base_id='.$orderItem->getBaseId().'&order_id='.$orderItem->getId().'" data-action="cancel-order">Cancel</button>'.self::load_js();
+
+		$delivery_cancelables = array('-1', '0', '1');
+		$payment_cancelables = array('4', '5', '6');
+		if((in_array($statusdelivery, $delivery_cancelables) || empty($statusdelivery)) && in_array($statuspayment, $payment_cancelables)){
+			return '<button type="button" class="btn btn-default btn-cancel-order btn-cancel-order-'.$orderItem->getBaseId().' sw_confirm" data-message="'. $contex->translate( 'client', 'Your order will be canceled. Do you approve this action?' ).'" data-text="'.$contex->translate( 'client', 'I accept' ).'" href="'.url('jsonapi/orderhistory').'?base_id='.$orderItem->getBaseId().'&order_id='.$orderItem->getId().'" data-action="cancel-order">'.$contex->translate( 'client', 'Cancel Order' ).'</button>'.self::load_js();
 		}
 		
 	}
@@ -54,7 +57,7 @@ class Helper
 				</span>
 			</h2>
 		</div>	
-		<div class="col-10">
+		<div class="col-12">
 			<div class="row">
 				<div class="col-md-6">
 					<div class="order-created row">
@@ -98,7 +101,8 @@ class Helper
 							<?= $enc->html( $contex->translate( 'client', 'Delivery' ), $enc::TRUST ); ?>
 						</span>
 						<span class="value col-7">
-							<?php if( ( $date = $orderItem->getDateDelivery() ) !== null ) : ?>
+						
+							<?php if(  !empty($orderItem->getDeliveryStatus())  ) : ?>
 								<?php $code = 'stat:' . $orderItem->getDeliveryStatus(); $status = $contex->translate( 'mshop/code', $code ); ?>
 								<?= $enc->html( sprintf( $attrformat, $status, date_create( $date )->format( $dateformat ) ), $enc::TRUST ); ?>
 							<?php endif; ?>
@@ -133,7 +137,7 @@ class Helper
 								<?php $code = 'pay:' . $listItem->getPaymentStatus(); $paystatus = $contex->translate( 'mshop/code', $code ); ?>
 								<?= $enc->html( sprintf( $attrformat, $paystatus, date_create( $date )->format( $dateformat ) ), $enc::TRUST ); ?>
 							<?php endif; ?></td>
-		<td><?php if( ( $date = $listItem->getDateDelivery() ) !== null ) : ?>
+		<td><?php if( !empty($listItem->getDeliveryStatus()) ) : ?>
 								<?php $code = 'stat:' . $listItem->getDeliveryStatus(); $status = $contex->translate( 'mshop/code', $code ); ?>
 								<?= $enc->html( sprintf( $attrformat, $status, date_create( $date )->format( $dateformat ) ), $enc::TRUST ); ?>
 							<?php endif; ?></td>
@@ -183,7 +187,7 @@ class Helper
     border-bottom: 2px solid;
 ">
 					<div class="process-title"><?= $enc->html( $contex->translate( 'client', 'Delivery Status' ), $enc::TRUST ) ?></div>
-				<div class="process-desc"><?php if( ( $date = $listItem->getDateDelivery() ) !== null ) : ?>
+				<div class="process-desc"><?php if( !empty($listItem->getDeliveryStatus()) ) : ?>
 								<?php $code = 'stat:' . $listItem->getDeliveryStatus(); $status = $contex->translate( 'mshop/code', $code ); ?>
 								<?= $enc->html( sprintf( $attrformat, $status, date_create( $date )->format( $dateformat ) ), $enc::TRUST ); ?>
 							<?php endif; ?></div>
