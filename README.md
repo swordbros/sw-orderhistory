@@ -13,7 +13,7 @@ Add this line your web site composser.json
 
 ```
 // This assumes that you have composer installed globally
-composer require swordbros/omnipay-sberbank
+composer require swordbros/sw-orderhistory
 ```
 
 ## change templates
